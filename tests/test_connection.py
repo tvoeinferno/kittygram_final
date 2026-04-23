@@ -25,7 +25,7 @@ def _get_validated_link(
     )
     link_pattern = re.compile(
         r'^https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.'
-        r'[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$'
+        r'[a-zA-Z0-9()]{1,63}\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$'
     )
     assert link_pattern.match(link), (
         f'Убедитесь, что ключ `{link_key}` в файле '
