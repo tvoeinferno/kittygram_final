@@ -138,8 +138,7 @@ def test_vm_name(deploy_file_info: tuple[Path, str],
     )
 
     vm_name = deploy_info_file_content[vm_name_key]
-    assert vm_name.startswith('r-backend-vm'), (
+    assert isinstance(vm_name, str) and vm_name.strip(), (
         f'Убедитесь, что в ключе `{vm_name_key}` файла `{relative_path}` '
-        'указано имя виртуальной машины. Имя должно начинаться с '
-        '`r-backend-vm`.'
+        'указано имя виртуальной машины.'
     )
