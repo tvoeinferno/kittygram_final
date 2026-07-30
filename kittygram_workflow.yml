@@ -1,3 +1,7 @@
+name: Main Kittygram workflow
+
+on:
+  push:
     branches:
       - main
 
@@ -44,8 +48,21 @@ jobs:
 
       - name: Run backend tests
 
+        working-directory: backend
+        run: |
+          python manage.py test
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install frontend dependencies
+        working-directory: frontend
         run: npm ci
 
+      - name: Run frontend tests
+        working-directory: frontend
+        env:
           CI: true
         run: npm test
 
@@ -111,16 +128,3 @@ jobs:
             sudo docker compose -f docker-compose.production.yml exec -T backend python manage.py migrate
 
             sudo docker compose -f docker-compose.production.yml exec -T backend python manage.py collectstatic --noinput
-
-      - name: Run frontend tests
-        working-directory: frontend
-        env:
-
-      - name: Install frontend dependencies
-        working-directory: frontend
-        working-directory: backend
-        run: |
-          node-version: 18
-          python manage.py test
-
-      - uses: actions/setup-node@v4

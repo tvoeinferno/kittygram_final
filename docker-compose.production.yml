@@ -11,7 +11,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend/
+    image: tvoeinferno/kittygram_backend:latest
     env_file: .env
     depends_on:
       - db
@@ -20,17 +20,18 @@ services:
       - media:/app/media
 
   frontend:
-    build: ./frontend/
-    env_file: .env
+    image: tvoeinferno/kittygram_frontend:latest
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
 
   gateway:
-    build: ./nginx/
-    env_file: .env
+    image: tvoeinferno/kittygram_gateway:latest
+    depends_on:
+      - backend
     ports:
-      - 9000:80
+      - "9000:80"
     volumes:
       - static:/static
       - media:/media
+
